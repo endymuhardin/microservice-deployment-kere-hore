@@ -11,7 +11,7 @@ server {
     index index.php index.html;
 
     location / {
-      try_files $uri $uri/ =404;
+      proxy_pass http://localhost:10001;
     }
 }
 server {
