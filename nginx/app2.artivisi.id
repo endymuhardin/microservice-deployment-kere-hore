@@ -1,0 +1,27 @@
+server {
+    server_name app2.artivisi.id;
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+
+    ssl_certificate /etc/letsencrypt/live/app2.artivisi.id/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/app2.artivisi.id/privkey.pem;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    root /var/www/app2.artivisi.id/html;
+    index index.php index.html;
+
+    location / {
+      try_files $uri $uri/ =404;
+    }
+}
+server {
+    if ($host = app2.artivisi.id) {
+        return 301 https://$host$request_uri;
+    }
+
+  listen 80;
+  listen [::]:80;
+
+  server_name app2.artivisi.id;
+  return 404;
+}
